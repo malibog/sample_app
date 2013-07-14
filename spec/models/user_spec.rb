@@ -22,7 +22,7 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
 
-  it {  should be_valid  }
+
 
   require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
@@ -31,7 +31,7 @@ describe User do
     it {  should_not be_valid  }
   end
 
-  describe "when name is too long" do
+ describe "when name is too long" do
     before {  @user.name ="A" * 55 }
     it {  should_not be_valid  }
   end
@@ -57,17 +57,17 @@ describe User do
     end
   end
 
-  describe "when email address is already taken" do
+
+describe "when email address is already taken" do
     before do
       user_with_same_email = @user.dup
        user_with_same_email.email = @user.email.upcase
       user_with_same_email.save
+       it { should_not be_valid }
     end
+end
 
-    it { should_not be_valid }
-  end
-
-  describe "when password is not present" do
+describe "when password is not present" do
     before { @user.password = @user.password_confirmation = " " }
     it { should_not be_valid }
   end
@@ -77,15 +77,13 @@ describe User do
     it { should_not be_valid }
   end
 
-  describe "when password confirmation is nil" do
-    before { @user.password_confirmation = nil }
-    it { should_not be_valid }
-  end
+
 
 describe "with a password that's too short" do
     before { @user.password = @user.password_confirmation = "a" * 5 }
     it { should be_invalid }
   end
+
 
   describe "return value of authenticate method" do
     before { @user.save }
@@ -101,10 +99,7 @@ describe "with a password that's too short" do
       it { should_not == user_for_invalid_password }
       specify { user_for_invalid_password.should be_false }
     end
-  end
-
-
-
+end
 
 
 
